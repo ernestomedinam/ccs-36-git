@@ -1,7 +1,7 @@
 *,  *::after, *::before {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: content-box;
 }
 
 .parent {
@@ -11,4 +11,5 @@
 
 .kid {
     height: 50%;
+    height: 25%;
 }
