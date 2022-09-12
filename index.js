@@ -1,96 +1,66 @@
-// var name = "Ernesto";
-// let age = 38;
-// const venezuelan = true;
-// const _undefined = undefined;
-// const _null = null;
-// const dog = {
-//     hairColor: "black",
-//     breed: "Boxer",
-//     age: 1.2,
-//     name: "Wotuja",
-//     owner: {
-//         name: "Rosaury",
-//         address: "Chacao",
-//         phone: "02129955555"
-//     },
-//     vaccines: [
-//         "covid19",
-//         {
-//             name: "antirabia",
-//             dosage: "0.5cc"
-//         },
-//         ["polio", "la otra"]
-//     ],
-//     bark: function(times) { // 5
-//         // for (inicia; criterio; incremento/decremento) {bloque}
-//         for (let time = 1; time <= times; time = time + 2) {
-//             console.log("guau");
-//         }
-//     },
-//     fetch: function(stickDistance) {
-//         // if (condición) {bloque si la condición se resuelve a true}
-//         // else if (condición) {bloque si no...}
-//         // else {bloque si no...}
-//         if (this.breed === "Retriever") {
-//             console.log(`El perro salió corriendo detrás del palo, recorrió ${stickDistance} metros y volvió.`);
-//         } 
-//         if (this.breed === "Boxer") {
-//             console.log(`El perro salió corriendo detrás del palo, recorrió ${stickDistance} metros y se quedó cuidando un bebé de otra familia.`)
-//         } else {
-//             console.log("El perro vio el palo y se quedó echado.")
-//         }
-//     }
-// };
-
-// dog.bark(5);
-// dog.fetch(40);
+document.onreadystatechange = () => {
+    if (document.readyState !== "complete") return;
+    const listContainer = document.querySelector("#list-container");
+    const liElements = [...listContainer.children[0].children];
+    listContainer.removeChild(listContainer.children[0]);
+    const ol = document.createElement("ol");
+    liElements.forEach(
+        (li) => ol.appendChild(li)
+    );
+    listContainer.appendChild(ol);
+    listContainer.parentElement.appendChild(
+        myObject.buildButton()
+    );
+    const body = document.querySelector("body"); // document.body;
+    // event listener del body
+    body.addEventListener("click", (event) => {
+        console.log("Hola, soy el event listener del body");
+        console.log(event.eventPhase);
+        console.log(event.target);
+    });
+    // event listener del papa de list container
+    listContainer.parentElement.addEventListener("click", (event) => {
+        console.log("Hola, soy el event listener del papa de container list");
+        console.log(event.eventPhase);
+        console.log(event.target);
+    });
+    // event listener de list container
+    listContainer.addEventListener("click", (event) => {
+        console.log("Hola, soy el event listener list container");
+        console.log(event.eventPhase);
+        console.log(event.target);
+    });
+};
 
 
-var uno = 1;
-var unoString = "1";
-
-console.log(uno == unoString); 
-// YES, sólo evalúa que 1 vale 1 y "1" también
-
-console.log(uno === unoString); 
-// NO, porque solo son iguales en valor, pero son de distinto tipo
-
-const names = ["Ernesto"];
-const otroNames = names;
-
-otroNames.push("Daniel");
-
-console.log(otroNames === names);
-console.log(names);
-
-console.log(['1'] === ['1']);
-
-// const list = [
-//     "primero", // 0
-//     "segundo", // 1
-//     50, // 2
-//     false, // 3
-//     null, // 4
-//     undefined // 5... list.length - 1
-// ]; // arreglos
-
-// list[4] = "galactica";
-
-// console.log(typeof list);
-// console.log(Array.isArray("patrañas"));
-// console.log(Array.isArray(list));
-
-
-
-
-
-
-
-
-// console.log(typeof age);
-// console.log(typeof name);
-// console.log(typeof venezuelan);
-// console.log(typeof _undefined);
-// console.log(typeof _null);
-// console.log(typeof list);
-// console.log(typeof myObject);
+function handleClick(event) {
+    console.log("hola yo soy el event listener del div flex");
+    console.log(event.eventPhase);
+    console.log(event.target);
+    event.stopPropagation();
+    event.preventDefault();
+    event.target.parentElement.removeEventListener("click", handleClick);
+}
+// devuelve un bot'on centrado en un flex con w-100
+const myObject = {
+    name: "my object",
+    buildButton: () => {
+        const button = document.createElement("button");
+        // btn btn-primary
+        button.className = "btn btn-primary";
+        button.textContent = "Hazme click!";
+        button.addEventListener("click", (event) => {
+            console.log("hola yo soy el even listener del bot'on");
+            console.log(event.eventPhase);
+            console.log(event.target);
+        });
+        const flex = document.createElement("div");
+        flex.addEventListener("click", handleClick);
+        flex.style.display = "flex";
+        flex.style.flexFlow = "row nowrap";
+        flex.style.justifyContent = "center";
+        flex.style.width = "100%";
+        flex.appendChild(button);
+        return flex;
+    }
+}
